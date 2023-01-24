@@ -15,8 +15,10 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Config
 @Autonomous
 public class CycleAutoRedRightLowLow extends LinearOpMode {
-    Pose2d START_POSE = new Pose2d(38,-64,Math.toRadians(180));
-    Pose2d Preload_POSE = new Pose2d(35,-9.5, Math.toRadians(180.5));
+    Pose2d START_POSE = new Pose2d(38,-67,Math.toRadians(180));
+    Pose2d Preload_POSE = new Pose2d(38,-12, Math.toRadians(180));
+    Pose2d Score_POSE = new Pose2d(38,-12, Math.toRadians(180));
+    Pose2d Intake_POSE = new Pose2d(60,-12, Math.toRadians(180));
     Robot robot;
     SleeveDetector detector = new SleeveDetector();
     SleeveDetectionPipeline.Color parkingPos = SleeveDetectionPipeline.Color.BLUE;
@@ -64,7 +66,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     robot.turret.setTargetAngle(503);
                     robot.lift.setTargetHeight(liftHigh);
-                    robot.intake.setArmPos(0.75);
+                    robot.intake.setArmPos(0.52);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0.01, () -> {
                     robot.lift.setHorizontalPosition(0.73);
@@ -88,7 +90,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                     robot.lift.setTargetHeight(160);
                 })
                 //Pick Up Cone
-                .lineToLinearHeading(new Pose2d(53.5,-9.5, Math.toRadians(170)))
+                .lineToLinearHeading(Intake_POSE)
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, () -> {
                     robot.lift.setTargetHeight(90);
                     robot.lift.setHorizontalPosition(hzslidesout);
@@ -339,7 +341,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     robot.turret.setTargetAngle(503);
                     robot.lift.setTargetHeight(liftHigh);
-                    robot.intake.setArmPos(0.75);
+                    robot.intake.setArmPos(0.52);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0.01, () -> {
                     robot.lift.setHorizontalPosition(0.73);
@@ -363,7 +365,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                     robot.lift.setTargetHeight(160);
                 })
                 //Pick Up Cone
-                .lineToLinearHeading(new Pose2d(53.5,-9.5, Math.toRadians(170)))
+                .lineToLinearHeading(Intake_POSE)
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, () -> {
                     robot.lift.setTargetHeight(90);
                     robot.lift.setHorizontalPosition(hzslidesout);
@@ -614,7 +616,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(-2, () -> {
                     robot.turret.setTargetAngle(503);
                     robot.lift.setTargetHeight(liftHigh);
-                    robot.intake.setArmPos(0.75);
+                    robot.intake.setArmPos(0.52);
                 })
                 .UNSTABLE_addTemporalMarkerOffset(0.01, () -> {
                     robot.lift.setHorizontalPosition(0.73);
@@ -638,7 +640,7 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
                     robot.lift.setTargetHeight(160);
                 })
                 //Pick Up Cone
-                .lineToLinearHeading(new Pose2d(53.5,-9.5, Math.toRadians(170)))
+                .lineToLinearHeading(Intake_POSE)
                 .UNSTABLE_addTemporalMarkerOffset(-0.9, () -> {
                     robot.lift.setTargetHeight(90);
                     robot.lift.setHorizontalPosition(hzslidesout);
@@ -910,13 +912,13 @@ public class CycleAutoRedRightLowLow extends LinearOpMode {
 
         if (Parking.equals(SleeveDetectionPipeline.Color.RED)) {
             park = "red";
-            robot.drive.followTrajectorySequenceAsync(RedPark);
+            robot.drive.followTrajectorySequenceAsync(preloadRedRight);
         } else if (Parking.equals(SleeveDetectionPipeline.Color.MAGENTA)) {
             park = "magenta";
-            robot.drive.followTrajectorySequenceAsync(MagentaPark);
+            robot.drive.followTrajectorySequenceAsync(preloadMagentaLeft);
         } else {
             park = "blue";
-            robot.drive.followTrajectorySequenceAsync(BluePark);
+            robot.drive.followTrajectorySequenceAsync(preloadBlueMiddle);
         }
 
         //robot.drive.followTrajectorySequenceAsync(cycleLow);

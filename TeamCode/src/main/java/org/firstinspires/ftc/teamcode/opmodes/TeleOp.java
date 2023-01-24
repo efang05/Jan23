@@ -27,8 +27,8 @@ public class TeleOp extends LinearOpMode {
     double turretaddition = 10;
     double dtspeed = 1;
     public double up = 1200;
-    public double mid = 950;
-    public double low = 550;
+    public double mid = 750;
+    public double low = 350;
     public double ground = 0;
     public double idle = 200;
     public double intaking = -5;
@@ -46,7 +46,7 @@ public class TeleOp extends LinearOpMode {
     private String horizontalpos = "back";
     private String liftedpos = "lifted";
     private boolean running = false;
-    private double highposarm = 0.55;
+    private double highposarm = 0.53;
     private int wowie = 0;
 
     private double prev_time = System.currentTimeMillis();
@@ -211,9 +211,9 @@ public class TeleOp extends LinearOpMode {
 //                            }
 //                    }
                     if (-gamepad2.left_stick_y > 0.5) {
-                        robot.lift.targetHeight+=3;
+                        robot.lift.targetHeight+=8;
                     } else if (-gamepad2.left_stick_y < -0.5) {
-                        robot.lift.targetHeight-=3;
+                        robot.lift.targetHeight-=8;
                     }
 
                     if(gamepad2.right_stick_x>0.5){
@@ -270,7 +270,7 @@ public class TeleOp extends LinearOpMode {
                             robot.lift.setTargetHeight(idle);
                             if (timer.milliseconds() > 500) {
                                 if (gamepad1.left_bumper || timer.milliseconds()>1250) {
-                                    robot.intake.dropArm();
+                                    robot.intake.setArmPos(0.475);
                                     timer.reset();
                                     timer2.reset();
                                     robotState = robotState.IDLE2;
@@ -311,7 +311,7 @@ public class TeleOp extends LinearOpMode {
                             }
                             if (timer.milliseconds() > 500) {
                                 if (gamepad1.left_bumper) {
-                                    robot.intake.dropArm();
+                                    robot.intake.setArmPos(0.475);
                                     timer.reset();
                                     robotState = robotState.IDLE2;
                                 }
@@ -343,24 +343,12 @@ public class TeleOp extends LinearOpMode {
                                     lowheight = false;
                                 }
                                 if (gamepad2.dpad_down) {
-                                    if (Math.abs(robot.turret.getCurrentAngle() - back) < 5) {
-                                        robot.lift.setTargetHeight(ground);
-                                        robot.intake.dropArm();
-                                        timer.reset();
-                                        robotState = robotState.LIFTED;
-                                        armup = false;
-                                        lowheight = true;
-                                    } else {
-                                        robot.turret.setTargetAngle(back);
-                                        if (Math.abs(robot.turret.getCurrentAngle() - back) < 5) {
-                                            robot.lift.setTargetHeight(ground);
-                                            robot.intake.dropArm();
-                                            timer.reset();
-                                            robotState = robotState.LIFTED;
-                                            armup = false;
-                                            lowheight = true;
-                                        }
-                                    }
+                                    robot.lift.setTargetHeight(ground);
+                                    robot.intake.dropArm();
+                                    timer.reset();
+                                    robotState = robotState.LIFTED;
+                                    armup = false;
+                                    lowheight = true;
                                 }
                             }
                             break;
@@ -681,14 +669,12 @@ public class TeleOp extends LinearOpMode {
                             robot.intake.openClaw();
                             if (timer.milliseconds() > 450) {
                                 double marker2 = timer.milliseconds() + 300;
-                                if (lowheight == false) {
                                     robot.lift.setTargetHeight(idle);
                                     robot.intake.liftArm();
                                     robot.turret.setTargetAngle(back);
                                     robot.lift.setTargetHeight(idle);
                                     robotState = robotState.IDLE;
                                     timer.reset();
-                                } else {
                                     robot.lift.setTargetHeight(idle);
                                     robot.intake.liftArm();
                                     if (timer.milliseconds()>marker2) {
@@ -698,8 +684,6 @@ public class TeleOp extends LinearOpMode {
                                         timer.reset();
                                     }
                                 }
-
-                            }
                             break;
 
                     }

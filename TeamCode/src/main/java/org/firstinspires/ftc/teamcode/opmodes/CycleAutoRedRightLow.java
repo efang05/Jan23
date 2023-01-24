@@ -48,7 +48,7 @@ public class CycleAutoRedRightLow extends LinearOpMode {
     public double hzslidesout = 1.0;
     public double hzslidesin = 0.3;
 
-    public double scorearm = 0.55;
+    public double scorearm = 0.52;
 
     public double scoreangle = 480;
     public double preloadangle = 480;

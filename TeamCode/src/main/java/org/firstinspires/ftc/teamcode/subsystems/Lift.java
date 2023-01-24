@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.util.Encoder;
 
 import com.acmerobotics.roadrunner.profile.MotionProfile;
 import com.acmerobotics.roadrunner.profile.MotionProfileGenerator;
@@ -78,7 +79,7 @@ public class Lift implements Subsystem {
         }
         currentHeight = getCurrentHeight();
 
-        if (targetHeight < 1 && currentHeight < 10) {
+        if (targetHeight < 10 && currentHeight < 10) {
             setLiftPower(0);
         } else if (motor1.getPower() > 0.5 && motor1.getCurrent(CurrentUnit.AMPS) > 10) {
             setLiftPower(-1);
@@ -95,7 +96,7 @@ public class Lift implements Subsystem {
     }
 
     public void setLiftPower(double power) {
-        power = Range.clip(power, -MAX_POWER,MAX_POWER);
+        power = Range.clip(power, -0.6,MAX_POWER);
         motor2.setPower(power);
         motor1.setPower(power);
     }
@@ -122,7 +123,7 @@ public class Lift implements Subsystem {
 
 
     public double getCurrentHeight() {
-        double height = -motor1.getCurrentPosition() * ticks_to_inches;
+        double height = motor1.getCurrentPosition() * ticks_to_inches;
         return height;
     }
 
